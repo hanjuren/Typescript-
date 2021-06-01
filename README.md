@@ -9,7 +9,9 @@
 * 바벨과 같은 별도의 트랜스파일러 없이도 자바스크립트 엔진에서 실행이 가능하다.
 * 변수를 지정할 때 변수 값에 데이터 타입을 지정 할 수 있다.
 * 객체지향적 언어이다.
-* 
+
+
+---
 
 ## 2.타입스크립트 사용방법
 .ts 형식 파일을 터미널에서 컴파일 시켜준다.
@@ -31,8 +33,12 @@ tsc -w
 ```
 -w 는 .ts 파일의 변동을 감지하여 컴파일 해주는 명령어이다.
 
+---
+
 ## 3.타입 추론
 타입 표기가 없는 경우 코드를 읽고 분석하여 타입을 유추해낸다.
+
+---
 
 ## 4.타입 명시
 변수를 선언할때 변수 값의 타입을 명시하여 변수 값의 데이터 타입을 지정
@@ -40,6 +46,8 @@ tsc -w
 :void = 아무것도 반환하지 않는 함수라는 의미
 
 타입에 대한 명시가 많으면 좋다.
+
+---
 
 ## 5.인터페이스
 대문자로 네이밍 시작  
@@ -65,6 +73,8 @@ interface Student {
 ```
 선택적 프로퍼티로 사용하고자 하는 변수에 ?를 사용하면 된다.
 
+---
+
 ## 6.ReadOnly
 읽기전용 프로퍼티는 객체 생성시 할당된 프로퍼티 값을 바꿀 수 없다.
 
@@ -87,6 +97,8 @@ function saveStudent (student: Student):void {
 위 함수에서 읽기전용 프로퍼티인 studentId를 수정하려고 하면 다음과 같은 에러가 표시된다.
 
 <span style="color:red">**읽기 전용 속성이므로 'studentId'에 할당할 수 없습니다.ts(2540)**</span>
+
+---
 
 ## 7.Enum & Literal type
 프로퍼티의 값을 타입으로 지정하지 않고 실제 값만 받기 원할때 열거형과 리터럴 타입을 이용하여 프로퍼티 값을 미리 정해줄 수 있다.
@@ -184,3 +196,67 @@ function getStudent(studentName: string): Student{
 }
 ```
 
+---
+
+## 8. Any, Union Type, Type Aliases, Type Guards
+
+### 8-1. any
+어떠한 값이든 변수에 할당이 가능하다는 의미
+```js
+let someValue: any = 5;
+someValue = 'hanjure';
+```
+위와 같이 어떤한 타입이든 변환이 가능하지만 타입스크립트에서 효과적인 유지 보수를 위해서 타입 정보를 정확히 명시해주면 좋다.
+
+### 8-2. union type
+변수에 제한된 타입을 동시에 지정 하고 싶을때 union type을 사용한다.
+```js
+let someUnionValue: string | number = 5;
+someUnionValue = 'hanjuren';
+```
+| 기호로 사용할 타입을 지정해주기만 하면 된다. 
+
+### type Aliases
+반복하여 사용하는 코드를 타입으로 지정할 수 있다.  
+재사용 측면에서의 효율성이 좋다.
+```js
+type strOrNum = string | number; // 타입을 코드로 지정
+let aliasesType: strOrNum = 5; // 지정된 코드를 사용
+```
+
+### Type Guards
+```js
+type strOrNum = string | number;
+let itemPrice: number;
+
+const setItemPrice = (price: strOrNum):void => {
+  itemPrice = price
+};
+
+setItemPrice(50);
+
+>>>
+
+//'strOrNum' 형식은 'number' 형식에 할당할 수 없습니다.
+//'string' 형식은 'number' 형식에 할당할 수 없습니다.ts(2322)
+```
+type aliases를 사용하여 strOrNum는 string, number 타입을 사용할 수 있게 했지만 한가지의 타입만을 받는 변수에 사용한다면 에러가 난다  
+이럴때는 타입을 보호하는 Type Guards를 사용하면 된다.
+
+```js
+type strOrNum = string | number;
+let itemPrice: number;
+
+const setItemPrice = (price: strOrNum):void => {
+  if (typeof price === 'string') {
+    itemPrice = 0;
+  } else {
+    itemPrice = price;
+  }
+};
+
+setItemPrice(50);
+```
+위와 같이 typeof Operator를 사용하여 변수의 데이터 타입을 확인하는 과정을 수행 해주면 된다. 이러한 과정을 타입 가드라고 한다.
+
+---
