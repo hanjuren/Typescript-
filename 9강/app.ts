@@ -1,7 +1,7 @@
 class Employee {
-  fullName: string;
-  age: number;
-  job: string;
+  fullName!: string;
+  age!: number;
+  job!: string;
   
   printEmployee = (): void => {
     console.log(`${this.fullName}의 나이는 ${this.age}살이고 직업은 ${this.job}입니다.`);

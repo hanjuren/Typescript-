@@ -330,8 +330,122 @@ C:\Users\juren\OneDrive\바탕 화면\TypeScript\9강>node app.js
 클래스에 각각의 프로퍼티 설정 후 인스턴스를 생성하여 호출하면 클래스를 사용할 수 있습니다.
 
 ---
+## 11. 클래스 생성자, 접근 제한자, Getter, Setter
 
+### 생성자 (Constructor)
+코드를 조금더 깔끔하고 간결하게 사용 할 수 있음  
+생성자는 클래스로 부터 객체를 생성할 때 호출되며 객체의 초기화를 담당한다.  
 
+```js
+class UserInfo {
+  userName: string;
+  userAge: number;
+  userJob: string;
+  // 생성자를 만들어서 인스턴스 생성시 프로퍼티의 값을 할당해준다.
+  constructor(userName: string, userAge: number, userJob: string) {
+    this.userName = userName;
+    this.userAge = userAge;
+    this.userJob = userJob;
+  }
+
+  printUserInfo = (): void => {
+    console.log(`${this.userName}의 나이는${this.userAge}세 입니다. 직업은${this.userJob} 입니다.`)
+  }
+}
+// 이전처럼 각각의 프로퍼티에 값을 지정하지 않아도 된다.
+let userinfo: UserInfo = new UserInfo('주련', 25, '학생');
+userinfo.printUserInfo();
+```
+
+### 접급제한자
+클래스의 멤버변수와 메소드에 적용될 수 있는 키워드  
+클래스 외부로 부터의 접근을 통제하여 버그를 줄이고 코드의 안정성을 향상시킬 수 있다는 장점이 있다.
+
+* public : 어디서든 접근가능
+* private: 클래스 내에서만 접근 가능
+* protected: 클래스 내부, 상속받은 자식 클래스에서 접근가능
+
+```js
+class UserInfo {
+  // userName을 클래스 내부에서만 접근 가능하게 수정
+  private userName: string;
+  userAge: number;
+  userJob: string;
+
+  constructor(userName: string, userAge: number, userJob: string) {
+    this.userName = userName;
+    this.userAge = userAge;
+    this.userJob = userJob;
+  }
+
+  printUserInfo = (): void => {
+    console.log(`${this.userName}의 나이는${this.userAge}세 입니다. 직업은${this.userJob} 입니다.`)
+  }
+}
+
+let userinfo: UserInfo = new UserInfo('주련', 25, '학생');
+// 직접적인 접근이 불가능..
+userinfo.userName = 'jure';
+/*
+(property) UserInfo.userName: string
+'userName' 속성은 private이며 'UserInfo' 클래스 내에서만 액세스할 수 있습니다.ts(2341)
+*/
+userinfo.printUserInfo();
+```
+
+### Getter, Setter
+클래스 내부에서만 접근이 가능한 프로퍼티를 외부에서도 접근이 가능하게 해준다.
+
+```js
+class UserInfo {
+  private _userName: string;
+  userAge: number;
+  userJob: string;
+
+  constructor(userName: string, userAge: number, userJob: string) {
+    this._userName = userName;
+    this.userAge = userAge;
+    this.userJob = userJob;
+  }
+
+  get userName () { // private으로 선언된 userName에 접근
+    return this._userName;
+  }
+  set userName (value: string) { // private으로 선언된 userName 값을 변경
+    this._userName = value; 
+  }
+
+  printUserInfo = (): void => {
+    console.log(`${this._userName}의 나이는${this.userAge}세 입니다. 직업은${this.userJob} 입니다.`)
+  }
+}
+
+let userinfo: UserInfo = new UserInfo('주련', 25, '학생');
+userinfo.userName = '한주련'
+userinfo.printUserInfo();
+```
+```cmd
+>node app.js
+한주련의 나이는25세 입니다. 직업은학생 입니
+다.
+```
+get, set 함수는 외부에서 호출하여 사용하지만 클래스 내부에 선언해야 한다. 
+
+### Access Mddifiers
+constructor 매개변수에 직접 적용하는 방법
+
+```js
+class UserInfo {
+  // constructor에 Access Mddifiers 적용
+  constructor(
+    private _userName: string, 
+    private _userAge: number, 
+    userJob: string) {
+  }
+
+}
+```
+객체가 생성될 때 constructor의 매개변수로 전달된 값을 자동으로 객체의 프로퍼티 값으로 초기화 할당 해준다.
 
 
 
