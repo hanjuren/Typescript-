@@ -296,6 +296,42 @@ function 함수이름 (매개변수1: 변수의 타입, 매개변수2: 변수의
 ```
 - 기본값을 지정해줄때는 매개변수의 타입을 지정해주지 않아도 타입추론으로 타입이 무엇인지 알 수 있다.
 
+---
+## 10. OOP 객체지향 프로그래밍, 클래스, 오브젝트
+
+### 객체지향 프로그래밍
+연관된 변수와 함수들을 한덩어리로 묶어서 구조화하여 표현하는 방식
+
+* Class
+1. 객체를 만들어 내기 위한 설계도, 생산틀
+
+```js
+class Employee {
+  fullName: string;
+  age: number;
+  job: string;
+  
+  printEmployee = (): void => {
+    console.log(`${this.fullName}의 나이는 ${this.age}살이고 직업은 ${this.job}입니다.`);
+  }
+}
+
+let employee1 = new Employee();
+employee1.fullName = '주련';
+employee1.age = 25;
+employee1.job = '학생';
+employee1.printEmployee();
+```
+
+```cmd
+C:\Users\juren\OneDrive\바탕 화면\TypeScript\9강>node app.js
+주련의 나이는 25살이고 직업은 학생입니다.
+```
+클래스에 각각의 프로퍼티 설정 후 인스턴스를 생성하여 호출하면 클래스를 사용할 수 있습니다.
+
+---
+
+
 
 
 
